@@ -337,7 +337,7 @@ export default function FinanceERP() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await window.storage.get("erp-data");
+        const res = await localStorage.getItem("erp-data");
         if (res && res.value) {
           const parsed = JSON.parse(res.value);
           if (parsed.accounts && parsed.accounts.length) {
@@ -356,7 +356,7 @@ export default function FinanceERP() {
           setEntries(parsed.entries || []);
           setFixedAssets(parsed.fixedAssets || []);
         }
-        const langRes = await window.storage.get("erp-lang");
+        const langRes = await localStorage.getItem("erp-lang");
         if (langRes && langRes.value) setLang(langRes.value);
       } catch (e) {
         // 저장된 데이터 없음 - 기본값 사용
@@ -369,7 +369,7 @@ export default function FinanceERP() {
     if (!loaded) return;
     (async () => {
       try {
-        await window.storage.set("erp-data", JSON.stringify({ accounts, entries, fixedAssets }));
+        localStorage.setItem("erp-data", JSON.stringify({ accounts, entries, fixedAssets }));
       } catch (e) {
         // 저장 실패 - 무시하고 계속 진행
       }
@@ -380,7 +380,7 @@ export default function FinanceERP() {
     if (!loaded) return;
     (async () => {
       try {
-        await window.storage.set("erp-lang", lang);
+        localStorage.setItem("erp-lang", lang);
       } catch (e) {}
     })();
   }, [lang, loaded]);
